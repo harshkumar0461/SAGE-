@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Login or Sign Up</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f9;
+        overflow: hidden;
+      }
+
+      .login-container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .login-container h2 {
+        margin-bottom: 20px;
+      }
+
+      .login-option {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        position: relative;
+      }
+
+      .login-option:hover {
+        background-color: #357ae8;
+      }
+
+      .login-option .loading {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid #fff;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .or-divider {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        color: #888;
+      }
+
+      .or-divider::before,
+      .or-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: #ccc;
+        margin: 0 10px;
+      }
+
+      .phone-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .phone-login input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+      }
+
+      .phone-login input:focus {
+        border-color: #4285f4;
+        outline: none;
+      }
+
+      .phone-login button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        position: relative;
+      }
+
+      .phone-login button:hover {
+        background-color: #218838;
+      }
+
+      .phone-login button .loading {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid #fff;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        animation: spin 1s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login or Sign Up</h2>
+
+      <!-- Google Login Button -->
+      <button
+        class="login-option"
+        onclick="simulateLoading(this, 'https://www.google.com')"
+      >
+        Continue with Google
+        <div class="loading"></div>
+      </button>
+
+      <!-- OR Divider -->
+      <div class="or-divider">OR</div>
+
+      <!-- Phone Number Login/Signup -->
+      <div class="phone-login">
+        <input type="tel" id="phone" placeholder="Enter your phone number" />
+        <button onclick="phoneLogin()">
+          Login / Sign Up with Phone
+          <div class="loading"></div>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function simulateLoading(button, redirectUrl) {
+        const loader = button.querySelector(".loading");
+        loader.style.display = "block"; // Show loading spinner
+        button.disabled = true; // Disable the button to prevent multiple clicks
+        button.style.backgroundColor = "#999"; // Change the button color to indicate disabled state
+
+        // Simulate loading and redirect after 2 seconds
+        setTimeout(() => {
+          window.location.href = redirectUrl; // Redirect to the actual page
+        }, 2000);
+      }
+
+      function phoneLogin() {
+        const phoneNumber = document.getElementById("phone").value;
+        const phoneButton = document.querySelector(".phone-login button");
+        const loader = phoneButton.querySelector(".loading");
+
+        if (phoneNumber) {
+          // Simulate loading spinner and phone login process
+          loader.style.display = "block"; // Show loading spinner
+          phoneButton.disabled = true; // Disable the button
+          phoneButton.style.backgroundColor = "#999"; // Change button color
+
+          setTimeout(() => {
+            alert("Phone number entered: " + phoneNumber);
+            // Normally, redirect to a phone verification page or OTP input page
+            loader.style.display = "none"; // Hide loading spinner
+            phoneButton.disabled = false; // Enable the button again
+            phoneButton.style.backgroundColor = "#28a745"; // Restore button color
+          }, 2000); // Simulate a 2-second delay for loading
+        } else {
+          alert("Please enter a valid phone number.");
+        }
+      }
+    </script>
+  </body>
+</html>
